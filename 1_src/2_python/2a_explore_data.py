@@ -15,9 +15,9 @@ if sys.argv[1] == "--h":
 	print 'commands:                 descriptions:'
 	print '__________________________________________________'
 	print ''
-	print '--h                      help menu'
-	print '--TopCompaniesInNetwork  # of connects per company'
-	print '--emails [company]       filtered email list'
+	print '--h                                      help menu'
+	print '--TopCompaniesInNetwork                  # per company'
+	print '--SearchEmails ["company"][posiiton]     find emails'
 	print '__________________________________________________'
 	print ''
 
@@ -25,4 +25,12 @@ if sys.argv[1] == "--TopCompaniesInNetwork":
 	df = pd.read_csv('/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/2_data/1_raw/Connections.csv')
 	my_tab = pd.crosstab(index=df["Company"],  columns="count")
 	my_tab = my_tab.sort_values(by = 'count', axis=0, ascending=False, inplace=False, kind='quicksort', na_position='last')
-	print(my_tab.head)      
+	print(my_tab.head)   
+
+if sys.argv[1] == "--SearchEmails":
+	df = pd.read_csv('/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/2_data/1_raw/Connections.csv')
+	df_filtered = df[df.Company == sys.argv[2]]
+	df_filtered = df_filtered[df_filtered['Position'].str.contains(sys.argv[3])]
+	print(df_filtered)
+
+    
