@@ -4,12 +4,6 @@
 ###############
 #To Do List
 
-#Scrape job descriptions for top skills and job description classifier based on NLP
+#Scrape job descriptions and set up automated emails (see Evernote)
 
-#Personalize email messagages based on company, number of endorsements, etc - ensure to email all people who have given a verbal endorsement. Check messages to ensure I don't spam people. Visualize response rates.
-
-
-
-#Create Email Classifier Tool (want a job, need an employee, your advice) - save classifications in separate csv files, find way to classify new incoming messages, visualize in dashboard
-
-#Visualize top searchers in dashboards
+#Create final email report: 1) job post link 2) people on linkedin I can email 3) Automatically generated text to send as an email for job I am interested in
