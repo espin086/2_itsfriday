@@ -12,6 +12,7 @@ then
     echo "--h                               Help Menu"
     echo "--Oath2SetUp                      Linkedin SetUp Instructions"
     echo "--SearchContacts                  Save Company/Title Email Lists"
+    echo "--TopSkills                       Top Skils by City"
     echo ""
     echo "Current Directory is: "
     pwd
@@ -35,12 +36,10 @@ fi
 
 if [ $1 = "--SearchContacts" ]
 then
-
     python /Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/1_src/2_python/2_pull_data.py --SearchContacts "The Walt Disney Company" "Director"
     python /Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/1_src/2_python/2_pull_data.py --SearchContacts "The Walt Disney Company" "SVP"
     python /Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/1_src/2_python/2_pull_data.py --SearchContacts "The Walt Disney Company" "Vice President"
     python /Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/1_src/2_python/2_pull_data.py --SearchContacts "The Walt Disney Company" "Recruiter"
-
 
     python /Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/1_src/2_python/2_pull_data.py --SearchContacts "Amazon" "Director"
     python /Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/1_src/2_python/2_pull_data.py --SearchContacts "Amazon" "SVP"
@@ -92,7 +91,6 @@ then
     python /Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/1_src/2_python/2_pull_data.py --SearchContacts "Microsoft" "SVP"
     python /Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/1_src/2_python/2_pull_data.py --SearchContacts "Microsoft" "Vice President"
     python /Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/1_src/2_python/2_pull_data.py --SearchContacts "Microsoft" "Recruiter"
-
 
 fi
 
