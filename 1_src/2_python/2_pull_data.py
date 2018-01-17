@@ -14,8 +14,8 @@ import time
 import requests
 import smtplib
 
-project_path = "/Users/jjespinoza/GoogleDrive/2_projects/"
-#project_path = "/Users/jjespinoza/GoogleDrive/2_projects/"
+#project_path = "/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/"
+project_path = "/home/jj_espinoza_la/itsfriday"
 
 
 
@@ -42,28 +42,28 @@ if sys.argv[1] == "--h":
 	print ''
 
 if sys.argv[1] == "--TopCompaniesInNetwork":
-	df = pd.read_csv(project_path + '2_itsfriday/2_data/1_raw/Connections.csv')
+	df = pd.read_csv(project_path + '2_data/1_raw/Connections.csv')
 	my_tab = pd.crosstab(index=df["Company"],  columns="count")
 	my_tab = my_tab.sort_values(by = 'count', axis=0, ascending=False, inplace=False, kind='quicksort', na_position='last')
 	print(my_tab.head) 
-	my_tab.to_csv(project_path + '2_itsfriday/2_data/2_clean/TopCompaniesInNetwork.csv')  
+	my_tab.to_csv(project_path + '2_data/2_clean/TopCompaniesInNetwork.csv')  
 
 if sys.argv[1] == "--MostInbox":
 	print("MostInbox")
-	df = pd.read_csv(project_path + '2_itsfriday/2_data/1_raw/Messages.csv')
+	df = pd.read_csv(project_path + '2_data/1_raw/Messages.csv')
 	df = df[df.Direction == "INCOMING"]
 	count = df['From'].value_counts()
 	print(count)
-	count.to_csv(project_path + '2_itsfriday/2_data/2_clean/MostInbox.csv')
+	count.to_csv(project_path + '2_data/2_clean/MostInbox.csv')
 
 if sys.argv[1] == "--SearchContacts":
-	df = pd.read_csv(project_path + '2_itsfriday/2_data/1_raw/Connections.csv')
+	df = pd.read_csv(project_path + '2_data/1_raw/Connections.csv')
 	company = sys.argv[2]
 	position = sys.argv[3]
 	df_filtered = df[df.Company == company]
 	df_filtered = df_filtered[df_filtered['Position'].str.contains(position)]
 	print(company + '-' + position)
-	df_filtered.to_csv(project_path + '2_itsfriday/2_data/2_clean/' + company +  '-' + position + '.csv')
+	df_filtered.to_csv(project_path + '/2_data/2_clean/' + company +  '-' + position + '.csv')
 	# print(df_filtered)
 
 if sys.argv[1] == "--TopSkills":
@@ -260,6 +260,6 @@ if sys.argv[1] == "--TopSkills":
 
 	fun_return = skills_info()
 	df = fun_return[1]
-	df.to_csv(project_path + '2_itsfriday/2_data/2_clean/' + 'TopSkills_' + title + '_' + city + '_' + state +  '.csv')
+	df.to_csv(project_path + '2_data/2_clean/' + 'TopSkills_' + title + '_' + city + '_' + state +  '.csv')
 
 
