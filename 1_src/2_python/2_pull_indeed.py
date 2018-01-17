@@ -32,11 +32,9 @@ date
 # In[17]:
 
 
-max_results_per_city = 10
-city_set = ['Los+Angeles']
-#city_set = ['Los+Angeles', 'Los+Angeles+County', 'Long+Beach', 'Downey', 'Commerce']
-title_set = ['data+scientist']
-#title_set = ['data+scientist', 'senior+data+scientist', 'director+data+science', 'director+analytics', 'vice+president+analytics', 'vice+president+data+science']
+max_results_per_city = 100
+city_set = ['Los+Angeles', 'Los+Angeles+County', 'Long+Beach', 'Downey', 'Commerce']
+title_set = ['data+scientist', 'senior+data+scientist', 'director+data+science', 'director+analytics', 'vice+president+analytics', 'vice+president+data+science']
 columns = ['city', 'job_title', 'company_name', 'location', 'summary', 'salary']
 sample_df = pd.DataFrame(columns = columns)
 
@@ -154,7 +152,7 @@ sample_df
 # In[66]:
 
 
-sample_df.to_csv(project_path + "2_data/1_raw/scraper_indeed_jobs_" + date + ".csv", encoding='utf-8')
+sample_df.to_csv(project_path + "2_data/1_raw/scraper_indeed_jobs_.csv", encoding='utf-8', index=False)
 
 
 # In[ ]:
