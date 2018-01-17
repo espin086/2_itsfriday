@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[56]:
+# In[10]:
 
 
 import requests
@@ -15,28 +15,31 @@ import datetime
 
 # ## Pulling Job Data
 
-# In[69]:
+# In[11]:
 
 
-#project_path = "/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/"
-project_path = "/home/jj_espinoza_la/itsfriday/"
-
+project_path = "/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/"
 now = datetime.datetime.now()
+now.year
+now.month
+now.day
 date = str(now.year) + str(now.month) + str(now.day) + "_" + str(now.hour) + str(now.minute)
 date
 
 
-# In[58]:
+# In[17]:
 
 
-max_results_per_city = 100
-city_set = ['Los+Angeles', 'Los+Angeles+County', 'Long+Beach', 'Downey', 'Commerce']
-title_set = ['data+scientist', 'senior+data+scientist', 'director+data+science', 'director+analytics', 'vice+president+analytics', 'vice+president+data+science']
+max_results_per_city = 10
+city_set = ['Los+Angeles']
+#city_set = ['Los+Angeles', 'Los+Angeles+County', 'Long+Beach', 'Downey', 'Commerce']
+title_set = ['data+scientist']
+#title_set = ['data+scientist', 'senior+data+scientist', 'director+data+science', 'director+analytics', 'vice+president+analytics', 'vice+president+data+science']
 columns = ['city', 'job_title', 'company_name', 'location', 'summary', 'salary']
 sample_df = pd.DataFrame(columns = columns)
 
 
-# In[59]:
+# In[18]:
 
 
 #scraping code:
@@ -45,7 +48,7 @@ for title in title_set:
         for start in range(0, max_results_per_city, 10):
             page = requests.get('http://www.indeed.com/jobs?q='+ str(title) +'+%2420%2C000&l=' + str(city) + '&start=' + str(start))
             time.sleep(1)  #ensuring at least 1 second between page grabs
-            soup = BeautifulSoup(page.text, 'lxml', from_encoding='utf-8')
+            soup = BeautifulSoup(page.text, 'lxml')
             for div in soup.find_all(name='div', attrs={'class':'row'}): 
                 #specifying row num for index of job posting in dataframe
                 num = (len(sample_df) + 1) 
@@ -89,19 +92,19 @@ for title in title_set:
 
 
 
-# In[60]:
+# In[19]:
 
 
 del sample_df['city']
 
 
-# In[61]:
+# In[20]:
 
 
 sample_df = sample_df.drop_duplicates()
 
 
-# In[70]:
+# In[21]:
 
 
 sample_df
@@ -109,13 +112,13 @@ sample_df
 
 # ## Calculating Distance
 
-# In[63]:
+# In[22]:
 
 
 sample_df["clean_address"] = sample_df["company_name"] + ' ' + sample_df["location"]
 
 
-# In[64]:
+# In[23]:
 
 
 commutes = []
@@ -136,13 +139,14 @@ for address in sample_df["clean_address"]:
         
 
 
-# In[65]:
+# In[25]:
 
 
 df = pd.DataFrame(commutes) 
 df.columns = ['commute', 'distance_km']
 df.index = range(1,len(df)+1)
 sample_df = sample_df.join(df, lsuffix='_caller', rsuffix='_other')
+sample_df
 
 
 # In[66]:
