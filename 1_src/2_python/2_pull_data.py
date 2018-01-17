@@ -14,6 +14,11 @@ import time
 import requests
 import smtplib
 
+project_path = "/Users/jjespinoza/GoogleDrive/2_projects/"
+#project_path = "/Users/jjespinoza/GoogleDrive/2_projects/"
+
+
+
 if sys.argv[1] == "--h":
 	print ''
 	print '*****************************************************'
@@ -32,41 +37,40 @@ if sys.argv[1] == "--h":
 	print '--SearchContacts ["company"]["posiiton"]   [LINKEDIN] find emails'
 	print '--MostInbox                                [LINKEDIN] contacts by inbox freq'
 	print '--TopEndorsers                             [LINKEDIN] Names of people with top endorsements'
-	print '--TopSkills ["title"]["city"]["state"]     [INDEED] Top Skills Per Job'
-	print '--FindJobs ["title"]["city"]["state"]      [INDEED] Finds jobs'
+	print '--TopSkills ["title"]["city"]              [INDEED] Top Skills Per Job'
 	print '__________________________________________________'
 	print ''
 
 if sys.argv[1] == "--TopCompaniesInNetwork":
-	df = pd.read_csv('/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/2_data/1_raw/Connections.csv')
+	df = pd.read_csv(project_path + '2_itsfriday/2_data/1_raw/Connections.csv')
 	my_tab = pd.crosstab(index=df["Company"],  columns="count")
 	my_tab = my_tab.sort_values(by = 'count', axis=0, ascending=False, inplace=False, kind='quicksort', na_position='last')
 	print(my_tab.head) 
-	my_tab.to_csv('/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/2_data/2_clean/TopCompaniesInNetwork.csv')  
+	my_tab.to_csv(project_path + '2_itsfriday/2_data/2_clean/TopCompaniesInNetwork.csv')  
 
 if sys.argv[1] == "--MostInbox":
 	print("MostInbox")
-	df = pd.read_csv('/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/2_data/1_raw/Messages.csv')
+	df = pd.read_csv(project_path + '2_itsfriday/2_data/1_raw/Messages.csv')
 	df = df[df.Direction == "INCOMING"]
 	count = df['From'].value_counts()
 	print(count)
-	count.to_csv('/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/2_data/2_clean/MostInbox.csv')
+	count.to_csv(project_path + '2_itsfriday/2_data/2_clean/MostInbox.csv')
 
 if sys.argv[1] == "--SearchContacts":
-	df = pd.read_csv('/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/2_data/1_raw/Connections.csv')
+	df = pd.read_csv(project_path + '2_itsfriday/2_data/1_raw/Connections.csv')
 	company = sys.argv[2]
 	position = sys.argv[3]
 	df_filtered = df[df.Company == company]
 	df_filtered = df_filtered[df_filtered['Position'].str.contains(position)]
 	print(company + '-' + position)
-	df_filtered.to_csv('/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/2_data/2_clean/' + company +  '-' + position + '.csv')
+	df_filtered.to_csv(project_path + '2_itsfriday/2_data/2_clean/' + company +  '-' + position + '.csv')
 	# print(df_filtered)
 
 if sys.argv[1] == "--TopSkills":
 	
 	title = sys.argv[2]
 	city = sys.argv[3]
-	state = sys.argv[4]
+	state = "CA"
 
 	def text_cleaner(website):
 	    '''
@@ -222,11 +226,11 @@ if sys.argv[1] == "--TopSkills":
 	    
 	    leadership_dict = Counter({'Manage':doc_frequency['manage'], 'Lead':doc_frequency['lead'],
 	                    'hires':doc_frequency['hires'], 'develops':doc_frequency['develops'],
-	                    'Coaches':doc_frequency['coaches']})
+	                    'Coaches':doc_frequency['coaches'], 'Communication':doc_frequency['communication']})
 
 	    stats_dict = Counter({'Regression':doc_frequency['regression'], 'AI':doc_frequency['ai'],
 	                    'Econometrics':doc_frequency['econometrics'], 'Statistics':doc_frequency['statistics'],
-	                    'Quantitative':doc_frequency['quantitative']})
+	                    'Quantitative':doc_frequency['quantitative'], 'NLP':doc_frequency['nlp']})
 	                     
 	               
 	    overall_total_skills = prog_lang_dict + analysis_tool_dict + hadoop_dict + database_dict + stats_dict + leadership_dict # Combine our Counter objects
@@ -255,138 +259,7 @@ if sys.argv[1] == "--TopSkills":
 	    return fig, final_frame, job_descriptions # End of the function
 
 	fun_return = skills_info()
-
 	df = fun_return[1]
-
-	df.to_csv('/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/2_data/2_clean/' + 'TopSkills_' + title + '_' + city + '_' + state +  '.csv')
-
-if sys.argv[1] == "--FindJobs":
-
-	#returns skill count for a particulary job
-	def evaluate_job(job_url):
-	    try:
-	        job_html = requests.request('GET', job_url, timeout = 10)
-	    except:
-	        return 0
-	    
-	    job_soup = bs4.BeautifulSoup(job_html.content, 'lxml')
-	    soup_body = job_soup('body')[0]
-	    
-	    python_count = soup_body.text.count('Python') + soup_body.text.count('python')
-	    sql_count = soup_body.text.count('SQL') + soup_body.text.count('sql')
-	    r_count = len(re.findall('R[\,\.]', soup_body.text)) # this one's not perfect, but I blame R's name
-	    skill_count = python_count + sql_count + r_count
-	    print 'R count: {0}, Python count: {1}, SQL count: {2}'.format(r_count, python_count, sql_count)
-	    
-	    return skill_count
-	
-	#extracting organic job postings from indeed
-	def extract_job_data_from_indeed(base_url):
-	    response = requests.get(base_url)
-	    soup = bs4.BeautifulSoup(response.content, 'lxml')
-	    
-	    tags = soup.find_all('div', {'data-tn-component' : "organicJob"})
-	    companies_list = [x.span.text for x in tags]
-	    attrs_list = [x.h2.a.attrs for x in tags]
-	    dates = [x.find_all('span', {'class':'date'}) for x in tags]
-	    
-	    # update attributes dictionaries with company name and date posted
-	    [attrs_list[i].update({'company': companies_list[i].strip()}) for i, x in enumerate(attrs_list)]
-	    [attrs_list[i].update({'date posted': dates[i][0].text.strip()}) for i, x in enumerate(attrs_list)]
-	    return attrs_list
-
-	#finding companies that have extra appeal
-	extra_interest_companies = ['disney', 'netflix', 'google', 'facebook', 'amazon']
-
-	def find_new_jobs(days_ago_limit = 1, starting_page = 0, pages_limit = 20, old_jobs_limit = 5,
-                  location = 'New York, NY', query = 'data scientist'):
-	    query_formatted = re.sub(' ', '+', query)
-	    location_formatted = re.sub(' ', '+', location)
-	    indeed_url = 'http://www.indeed.com/jobs?q={0}&l={1}&sort=date&start='.format(query_formatted, location_formatted)
-	    old_jobs_counter = 0
-	    new_jobs_list = []
-	    
-	    for i in xrange(starting_page, starting_page + pages_limit):
-	        if old_jobs_counter >= old_jobs_limit:
-	            break
-	        
-	        print 'URL: {0}'.format(indeed_url + str(i*10)), '\n'
-
-	        # extract job data from Indeed page
-	        attrs_list = extract_job_data_from_indeed(indeed_url + str(i*10))
-	        
-	        # loop through each job, breaking out if we're past the old jobs limit
-	        for j in xrange(0, len(attrs_list)): 
-	            if old_jobs_counter >= old_jobs_limit:
-	                break
-
-	            href = attrs_list[j]['href']
-	            title = attrs_list[j]['title']
-	            company = attrs_list[j]['company']
-	            date_posted = attrs_list[j]['date posted']
-	            
-	            # if posting date is beyond the limit, add to the counter and skip
-	            try:
-	                if int(date_posted[0]) >= days_ago_limit:
-	                    print 'Adding to old_jobs_counter.'
-	                    old_jobs_counter+= 1
-	                    continue
-	            except:
-	                pass
-
-	            print '{0}, {1}, {2}'.format(repr(company), repr(title), repr(date_posted))
-
-	            # evaluate the job
-	            evaluation = evaluate_job('http://indeed.com' + href)
-	            
-	            if evaluation >= 1 or company.lower() in extra_interest_companies:
-	                new_jobs_list.append('{0}, {1}, {2}'.format(company, title, 'http://indeed.com' + href))
-	                
-	            print '\n'
-	            time.sleep(15)
-	            
-	    new_jobs_string = '\n\n'.join(new_jobs_list)
-	    return new_jobs_string
-
-#function that sends emails
-	def send_gmail(from_addr = 'jj.espinoza.la@gmail.com', to_addr = 'jj.espinoza.la@gmail.com',
-               location = 'Los Angeles, CA',
-               subject = 'Daily Data Science Jobs Update Scraped from Indeed', text = None):
-    
-	    message = 'Subject: {0}\n\nJobs in: {1}\n\n{2}'.format(subject, location, text)
-
-	    # login information
-	    username = 'jj.espinoza.la@gmail.com'
-	    password = '202g^66W49xk'
-	    
-	    # send the message
-	    server = smtplib.SMTP('smtp.gmail.com:587')
-	    server.ehlo()
-	    server.starttls()
-	    server.login(username, password)
-	    server.sendmail(from_addr, to_addr, message)
-	    server.quit()
-	    print 'Email sent.'
-	
-	def main():
-	    print 'Scraping Indeed now.'
-
-	    start_page = 0
-	    page_limit = 2
-	    location = 'Los Angeles, CA'
-	    data_scientist_jobs = find_new_jobs(query = 'data scientist', starting_page = start_page,
-	                                        location = location, pages_limit = page_limit, days_ago_limit = 1, old_jobs_limit = 5)
-	    send_gmail(text = data_scientist_jobs, location = location)
-
-if __name__ == "__main__":
-    main()
-			
-
-
-
-
-
-
-
+	df.to_csv(project_path + '2_itsfriday/2_data/2_clean/' + 'TopSkills_' + title + '_' + city + '_' + state +  '.csv')
 
 
