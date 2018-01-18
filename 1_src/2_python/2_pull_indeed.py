@@ -32,8 +32,7 @@ date
 # In[46]:
 
 
-max_results_per_city = 20
-#city_set = ['Los+Angeles']
+max_results_per_city = 100
 city_set = ['Los+Angeles', 'Los+Angeles+County', 'Long+Beach', 'Downey', 'Commerce']
 #title_set = ['data+scientist']
 title_set = ['data+scientist', 'senior+data+scientist', 'director+data+science', 'director+analytics', 'vice+president+analytics', 'vice+president+data+science']
@@ -151,7 +150,6 @@ sample_df = sample_df[ (~sample_df["location"].str.contains('Woodland Hills')) &
 
 sample_df
 
-
 # ## Dropping Companies
 
 # In[53]:
@@ -166,6 +164,7 @@ sample_df = sample_df[ (~sample_df["company_name"].str.contains('UCLA Extension'
                       (~sample_df["company_name"].str.contains('Childrens Hospital Los Angeles')) &
                       (~sample_df["company_name"].str.contains('CEDARS-SINAI')) &
                       (~sample_df["company_name"].str.contains('California State University')) &
+                      (~sample_df["company_name"].str.contains('Twentieth Century Fox')) &
                       (~sample_df["company_name"].str.contains('First 5 LA'))
                      ]
 
