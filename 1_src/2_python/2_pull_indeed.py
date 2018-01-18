@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[10]:
+# In[44]:
 
 
 import requests
@@ -15,7 +15,7 @@ import datetime
 
 # ## Pulling Job Data
 
-# In[11]:
+# In[45]:
 
 
 #project_path = "/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/"
@@ -29,17 +29,19 @@ date = str(now.year) + str(now.month) + str(now.day) + "_" + str(now.hour) + str
 date
 
 
-# In[17]:
+# In[46]:
 
 
-max_results_per_city = 100
+max_results_per_city = 20
+#city_set = ['Los+Angeles']
 city_set = ['Los+Angeles', 'Los+Angeles+County', 'Long+Beach', 'Downey', 'Commerce']
+#title_set = ['data+scientist']
 title_set = ['data+scientist', 'senior+data+scientist', 'director+data+science', 'director+analytics', 'vice+president+analytics', 'vice+president+data+science']
 columns = ['city', 'job_title', 'company_name', 'location', 'summary', 'salary']
 sample_df = pd.DataFrame(columns = columns)
 
 
-# In[18]:
+# In[47]:
 
 
 #scraping code:
@@ -92,19 +94,83 @@ for title in title_set:
 
 
 
-# In[19]:
+# In[48]:
 
 
 del sample_df['city']
 
 
-# In[20]:
+# In[49]:
 
 
 sample_df = sample_df.drop_duplicates()
 
 
-# In[21]:
+# In[50]:
+
+
+sample_df
+
+
+# In[ ]:
+
+
+
+
+
+# ## Dropping unwanted job titles
+# 
+
+# In[51]:
+
+
+
+sample_df = sample_df[(sample_df["job_title"] != "Account Director") & 
+                       (~sample_df["job_title"].str.contains('Software Engineer')) &
+                      (~sample_df["job_title"].str.contains('Intern')) &
+                      (~sample_df["job_title"].str.contains('Engineer')) &
+                      (~sample_df["job_title"].str.contains('Research')) &
+                     (~sample_df["job_title"].str.contains('Manager')) & 
+                     (~sample_df["job_title"].str.contains('Analyst'))]
+
+sample_df
+
+
+# ## Dropping Unwanted Cities
+
+# In[52]:
+
+
+sample_df = sample_df[ (~sample_df["location"].str.contains('Woodland Hills')) &
+                      (~sample_df["location"].str.contains('Santa Monica')) &
+                      (~sample_df["location"].str.contains('Culver City')) &
+                      (~sample_df["location"].str.contains('Burbank')) &
+                      (~sample_df["location"].str.contains('Hollywood')) &
+                      (~sample_df["location"].str.contains('Venice'))
+                     ]
+
+sample_df
+
+
+# ## Dropping Companies
+
+# In[53]:
+
+
+sample_df = sample_df[ (~sample_df["company_name"].str.contains('UCLA Extension')) &
+                      (~sample_df["company_name"].str.contains('USC')) &
+                      (~sample_df["company_name"].str.contains('Southern California University of Health Sciences')) &
+                      (~sample_df["company_name"].str.contains('Riot Games')) &
+                      (~sample_df["company_name"].str.contains('Los Angeles County')) &
+                      (~sample_df["company_name"].str.contains('Lieberman Research Worldwide')) &
+                      (~sample_df["company_name"].str.contains('Childrens Hospital Los Angeles')) &
+                      (~sample_df["company_name"].str.contains('CEDARS-SINAI')) &
+                      (~sample_df["company_name"].str.contains('California State University')) &
+                      (~sample_df["company_name"].str.contains('First 5 LA'))
+                     ]
+
+
+
 
 
 sample_df
@@ -112,13 +178,13 @@ sample_df
 
 # ## Calculating Distance
 
-# In[22]:
+# In[54]:
 
 
 sample_df["clean_address"] = sample_df["company_name"] + ' ' + sample_df["location"]
 
 
-# In[23]:
+# In[55]:
 
 
 commutes = []
@@ -139,7 +205,7 @@ for address in sample_df["clean_address"]:
         
 
 
-# In[25]:
+# In[56]:
 
 
 df = pd.DataFrame(commutes) 
@@ -149,10 +215,16 @@ sample_df = sample_df.join(df, lsuffix='_caller', rsuffix='_other')
 sample_df
 
 
-# In[66]:
+# In[57]:
 
 
-sample_df.to_csv(project_path + "2_data/1_raw/scraper_indeed_jobs_.csv", encoding='utf-8', index=False)
+sample_df.to_csv(project_path + "2_data/1_raw/scraper_indeed_jobs_" + date + ".csv", encoding='utf-8')
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:
