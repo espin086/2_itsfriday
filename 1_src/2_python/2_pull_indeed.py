@@ -134,11 +134,9 @@ sample_df = sample_df[(sample_df["job_title"] != "Account Director") &
 
 sample_df
 
-
 # ## Dropping Unwanted Cities
 
 # In[52]:
-
 
 sample_df = sample_df[ (~sample_df["location"].str.contains('Woodland Hills')) &
                       (~sample_df["location"].str.contains('Santa Monica')) &
@@ -153,8 +151,6 @@ sample_df
 # ## Dropping Companies
 
 # In[53]:
-
-
 sample_df = sample_df[ (~sample_df["company_name"].str.contains('UCLA Extension')) &
                       (~sample_df["company_name"].str.contains('USC')) &
                       (~sample_df["company_name"].str.contains('Southern California University of Health Sciences')) &
@@ -169,10 +165,6 @@ sample_df = sample_df[ (~sample_df["company_name"].str.contains('UCLA Extension'
                      ]
 
 
-
-
-
-sample_df
 
 
 # ## Calculating Distance
