@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[44]:
+# In[52]:
 
 
 import requests
@@ -15,11 +15,11 @@ import datetime
 
 # ## Pulling Job Data
 
-# In[45]:
+# In[53]:
 
 
-#project_path = "/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/"
-project_path = "/home/jj_espinoza_la/itsfriday/"
+project_path = "/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/"
+#project_path = "/home/jj_espinoza_la/itsfriday/"
 
 now = datetime.datetime.now()
 now.year
@@ -29,10 +29,12 @@ date = str(now.year) + str(now.month) + str(now.day) + "_" + str(now.hour) + str
 date
 
 
-# In[46]:
+# In[104]:
 
 
 max_results_per_city = 100
+max_commute = 45
+#city_set = ['Los+Angeles']
 city_set = ['Los+Angeles', 'Los+Angeles+County', 'Long+Beach', 'Downey', 'Commerce']
 #title_set = ['data+scientist']
 title_set = ['data+scientist', 'senior+data+scientist', 'director+data+science', 'director+analytics', 'vice+president+analytics', 'vice+president+data+science']
@@ -40,7 +42,7 @@ columns = ['city', 'job_title', 'company_name', 'location', 'summary', 'salary']
 sample_df = pd.DataFrame(columns = columns)
 
 
-# In[47]:
+# In[55]:
 
 
 #scraping code:
@@ -93,89 +95,123 @@ for title in title_set:
 
 
 
-# In[48]:
+# In[63]:
 
 
 del sample_df['city']
 
 
-# In[49]:
+# In[79]:
 
 
-sample_df = sample_df.drop_duplicates()
+sample_df['job_title'] = sample_df['job_title'].str.lower()
+sample_df['company_name'] = sample_df['company_name'].str.lower()
+sample_df['location'] = sample_df['location'].str.lower()
+sample_df['summary'] = sample_df['summary'].str.lower()
+sample_df = sample_df.drop_duplicates(subset=['job_title', 'company_name'], keep = False)
 
 
-# In[50]:
+# ### Saving Raw Data
+
+# In[80]:
 
 
+sample_df.to_csv(project_path + "2_data/1_raw/scraper_indeed_jobs_raw.csv", encoding='utf-8')
 sample_df
-
-
-# In[ ]:
-
-
-
 
 
 # ## Dropping unwanted job titles
 # 
 
-# In[51]:
+# In[87]:
+
+
+#Try this
+sample_df = sample_df[(sample_df["job_title"] != "account") & 
+                       (~sample_df["job_title"].str.contains('engineer')) &
+                      (~sample_df["job_title"].str.contains('research')) &
+                     (~sample_df["job_title"].str.contains('manager')) &
+                      (~sample_df["job_title"].str.contains('developer')) & 
+                        (~sample_df["job_title"].str.contains('vice president of sales')) & 
+                        (~sample_df["job_title"].str.contains('communications')) & 
+                    (~sample_df["job_title"].str.contains('client')) & 
+                     (~sample_df["job_title"].str.contains('analyst'))]
 
 
 
-sample_df = sample_df[(sample_df["job_title"] != "Account Director") & 
-                       (~sample_df["job_title"].str.contains('Software Engineer')) &
-                      (~sample_df["job_title"].str.contains('Intern')) &
-                      (~sample_df["job_title"].str.contains('Engineer')) &
-                      (~sample_df["job_title"].str.contains('Research')) &
-                     (~sample_df["job_title"].str.contains('Manager')) & 
-                     (~sample_df["job_title"].str.contains('Analyst'))]
+
+
 
 sample_df
+
 
 # ## Dropping Unwanted Cities
 
-# In[52]:
+# In[93]:
 
-sample_df = sample_df[ (~sample_df["location"].str.contains('Woodland Hills')) &
-                      (~sample_df["location"].str.contains('Santa Monica')) &
-                      (~sample_df["location"].str.contains('Culver City')) &
-                      (~sample_df["location"].str.contains('Burbank')) &
-                      (~sample_df["location"].str.contains('Hollywood')) &
-                      (~sample_df["location"].str.contains('Venice'))
+
+sample_df = sample_df[ (~sample_df["location"].str.contains('woodland hills')) &
+                      (~sample_df["location"].str.contains('santa monica')) &
+                      (~sample_df["location"].str.contains('culver city')) &
+                      (~sample_df["location"].str.contains('burbank')) &
+                      (~sample_df["location"].str.contains('hollywood')) &
+                      (~sample_df["location"].str.contains('westwood')) &
+                      (~sample_df["location"].str.contains('universal city')) &
+                      (~sample_df["location"].str.contains('beverly hills')) &
+                      (~sample_df["location"].str.contains('playa vista')) &
+                      (~sample_df["location"].str.contains('valencia')) &
+                      (~sample_df["location"].str.contains('encino')) &
+                      (~sample_df["location"].str.contains('venice'))
                      ]
+
+
 
 sample_df
 
+
 # ## Dropping Companies
 
-# In[53]:
-sample_df = sample_df[ (~sample_df["company_name"].str.contains('UCLA Extension')) &
-                      (~sample_df["company_name"].str.contains('USC')) &
-                      (~sample_df["company_name"].str.contains('Southern California University of Health Sciences')) &
-                      (~sample_df["company_name"].str.contains('Riot Games')) &
-                      (~sample_df["company_name"].str.contains('Los Angeles County')) &
-                      (~sample_df["company_name"].str.contains('Lieberman Research Worldwide')) &
-                      (~sample_df["company_name"].str.contains('Childrens Hospital Los Angeles')) &
-                      (~sample_df["company_name"].str.contains('CEDARS-SINAI')) &
-                      (~sample_df["company_name"].str.contains('California State University')) &
-                      (~sample_df["company_name"].str.contains('Twentieth Century Fox')) &
-                      (~sample_df["company_name"].str.contains('First 5 LA'))
+# In[97]:
+
+
+sample_df = sample_df[ (~sample_df["company_name"].str.contains('ucla Extension')) &
+                      (~sample_df["company_name"].str.contains('usc')) &
+                      (~sample_df["company_name"].str.contains('health')) &
+                      (~sample_df["company_name"].str.contains('riot games')) &
+                      (~sample_df["company_name"].str.contains('los angeles county')) &
+                      (~sample_df["company_name"].str.contains('lieberman research worldwide')) &
+                      (~sample_df["company_name"].str.contains('hospital')) &
+                      (~sample_df["company_name"].str.contains('medicine')) &
+                       (~sample_df["company_name"].str.contains('university')) &
+                      (~sample_df["company_name"].str.contains('first 5 la'))
+                      
                      ]
 
 
 
+health
+
+
+sample_df
+
+
+# In[98]:
+
+
+sample_df.to_csv(project_path + "2_data/2_clean/scraper_indeed_jobs_clean.csv", encoding='utf-8')
+
+
+# ### Saving Clean Data
 
 # ## Calculating Distance
 
-# In[54]:
+# In[99]:
 
 
 sample_df["clean_address"] = sample_df["company_name"] + ' ' + sample_df["location"]
 
 
-# In[55]:
+# In[100]:
 
 
 commutes = []
@@ -196,7 +232,7 @@ for address in sample_df["clean_address"]:
         
 
 
-# In[56]:
+# In[108]:
 
 
 df = pd.DataFrame(commutes) 
@@ -206,16 +242,12 @@ sample_df = sample_df.join(df, lsuffix='_caller', rsuffix='_other')
 sample_df
 
 
-# In[57]:
+# ### Filtering Based on Distance
+
+# In[109]:
 
 
-sample_df.to_csv(project_path + "2_data/1_raw/scraper_indeed_jobs_" + date + ".csv", encoding='utf-8')
-
-
-# In[ ]:
-
-
-
+sample_df.to_csv(project_path + "2_data/2_clean/scraper_indeed_jobs_clean_enhanced.csv", encoding='utf-8')
 
 
 # In[ ]:
