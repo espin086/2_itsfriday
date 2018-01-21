@@ -9,6 +9,7 @@
 python /home/jj_espinoza_la/itsfriday/1_src/2_python/2_pull_indeed.py
 
 #pushes data to Google Storage For Additional Processing
-gsutil cp /home/jj_espinoza_la/itsfriday/2_data/1_raw/scraper_indeed_jobs_.csv gs://indeed-scraper
+gsutil cp /home/jj_espinoza_la/itsfriday/2_data/1_raw/scraper_indeed_jobs_raw.csv gs://indeed-scraper
+gsutil cp /home/jj_espinoza_la/itsfriday/2_data/2_clean/scraper_indeed_jobs_clean_enhanced.csv gs://indeed-scraper
 
 
