@@ -18,8 +18,8 @@ import datetime
 # In[53]:
 
 
-project_path = "/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/"
-#project_path = "/home/jj_espinoza_la/itsfriday/"
+#project_path = "/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/"
+project_path = "/home/jj_espinoza_la/itsfriday/"
 
 now = datetime.datetime.now()
 now.year
