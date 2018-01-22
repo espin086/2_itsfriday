@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[52]:
+# In[1]:
 
 
 import requests
@@ -15,7 +15,7 @@ import datetime
 
 # ## Pulling Job Data
 
-# In[53]:
+# In[2]:
 
 
 #project_path = "/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/"
@@ -29,20 +29,20 @@ date = str(now.year) + str(now.month) + str(now.day) + "_" + str(now.hour) + str
 date
 
 
-# In[104]:
+# In[3]:
 
 
-max_results_per_city = 100
+max_results_per_city = 1
 max_commute = 45
 #city_set = ['Los+Angeles']
-city_set = ['Los+Angeles', 'Los+Angeles+County', 'Long+Beach', 'Downey', 'Commerce']
+city_set = ['Los+Angeles', 'Los+Angeles+County', 'Long+Beach', 'Downey', 'Commerce', 'El+Segundo']
 #title_set = ['data+scientist']
 title_set = ['data+scientist', 'senior+data+scientist', 'director+data+science', 'director+analytics', 'vice+president+analytics', 'vice+president+data+science']
 columns = ['city', 'job_title', 'company_name', 'location', 'summary', 'salary']
 sample_df = pd.DataFrame(columns = columns)
 
 
-# In[55]:
+# In[4]:
 
 
 #scraping code:
@@ -55,13 +55,16 @@ for title in title_set:
             for div in soup.find_all(name='div', attrs={'class':'row'}): 
                 #specifying row num for index of job posting in dataframe
                 num = (len(sample_df) + 1) 
+                
                 #creating an empty list to hold the data for each posting
                 job_post = [] 
                 #append city name
                 job_post.append(city) 
+                
                 #grabbing job title
                 for a in div.find_all(name='a', attrs={'data-tn-element':'jobTitle'}):
                     job_post.append(a['title']) 
+                
                 #grabbing company name
                 company = div.find_all(name='span', attrs={'class':'company'}) 
                 if len(company) > 0: 
@@ -71,14 +74,17 @@ for title in title_set:
                     sec_try = div.find_all(name='span', attrs={'class':'result-link-source'})
                     for span in sec_try:
                         job_post.append(span.text) 
+                
                 #grabbing location name
                 c = div.findAll('span', attrs={'class': 'location'}) 
                 for span in c: 
                     job_post.append(span.text) 
+                
                 #grabbing summary text
                 d = div.findAll('span', attrs={'class': 'summary'}) 
                 for span in d:
                     job_post.append(span.text.strip()) 
+                
                 #grabbing salary
                 try:
                     job_post.append(div.find('nobr').text) 
@@ -95,13 +101,13 @@ for title in title_set:
 
 
 
-# In[63]:
+# In[5]:
 
 
 del sample_df['city']
 
 
-# In[79]:
+# In[6]:
 
 
 sample_df['job_title'] = sample_df['job_title'].str.lower()
@@ -113,7 +119,7 @@ sample_df = sample_df.drop_duplicates(subset=['job_title', 'company_name'], keep
 
 # ### Saving Raw Data
 
-# In[80]:
+# In[7]:
 
 
 sample_df.to_csv(project_path + "2_data/1_raw/scraper_indeed_jobs_raw.csv", encoding='utf-8')
@@ -123,7 +129,7 @@ sample_df
 # ## Dropping unwanted job titles
 # 
 
-# In[87]:
+# In[8]:
 
 
 #Try this
@@ -147,7 +153,7 @@ sample_df
 
 # ## Dropping Unwanted Cities
 
-# In[93]:
+# In[9]:
 
 
 sample_df = sample_df[ (~sample_df["location"].str.contains('woodland hills')) &
@@ -171,7 +177,7 @@ sample_df
 
 # ## Dropping Companies
 
-# In[97]:
+# In[11]:
 
 
 sample_df = sample_df[ (~sample_df["company_name"].str.contains('ucla Extension')) &
@@ -183,19 +189,13 @@ sample_df = sample_df[ (~sample_df["company_name"].str.contains('ucla Extension'
                       (~sample_df["company_name"].str.contains('hospital')) &
                       (~sample_df["company_name"].str.contains('medicine')) &
                        (~sample_df["company_name"].str.contains('university')) &
-                      (~sample_df["company_name"].str.contains('first 5 la'))
-                      
+                      (~sample_df["company_name"].str.contains('first 5 la'))  
                      ]
-
-
-
-health
-
 
 sample_df
 
 
-# In[98]:
+# In[12]:
 
 
 sample_df.to_csv(project_path + "2_data/2_clean/scraper_indeed_jobs_clean.csv", encoding='utf-8')
@@ -205,13 +205,13 @@ sample_df.to_csv(project_path + "2_data/2_clean/scraper_indeed_jobs_clean.csv", 
 
 # ## Calculating Distance
 
-# In[99]:
+# In[13]:
 
 
 sample_df["clean_address"] = sample_df["company_name"] + ' ' + sample_df["location"]
 
 
-# In[100]:
+# In[14]:
 
 
 commutes = []
@@ -232,7 +232,7 @@ for address in sample_df["clean_address"]:
         
 
 
-# In[108]:
+# In[15]:
 
 
 df = pd.DataFrame(commutes) 
@@ -244,7 +244,7 @@ sample_df
 
 # ### Filtering Based on Distance
 
-# In[109]:
+# In[16]:
 
 
 sample_df.to_csv(project_path + "2_data/2_clean/scraper_indeed_jobs_clean_enhanced.csv", encoding='utf-8')
