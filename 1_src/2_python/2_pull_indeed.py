@@ -32,7 +32,7 @@ date
 # In[3]:
 
 
-max_results_per_city = 1
+max_results_per_city = 100
 max_commute = 45
 #city_set = ['Los+Angeles']
 city_set = ['Los+Angeles', 'Los+Angeles+County', 'Long+Beach', 'Downey', 'Commerce', 'El+Segundo']
