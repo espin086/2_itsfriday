@@ -3,6 +3,8 @@
 #
 #To Do List
 
-#Scrape job descriptions and set up automated emails (see Evernotehttps://beckernick.github.io/job-discovery/)
+* [Scrape Linkedin](http://ferodia.github.io/linkedin-data-scraping-with-beautifulsoup)
+
+#Scrape job descriptions and set up automated emails (https://beckernick.github.io/job-discovery/)
 
 #Create final email report: 1) job post link 2) people on linkedin I can email 3) Automatically generated text to send as an email for job I am interested in
