@@ -11,6 +11,7 @@ import pandas as pd
 import time
 import WazeRouteCalculator
 import datetime
+import os
 
 
 # ## Pulling Job Data
@@ -101,7 +102,8 @@ for title in title_set:
                     except:
                         job_post.append('Nothing_found')
                 # appending list of job post info to dataframe at index num
-                sample_df.loc[num] = job_post
+                sample_df = sample_df.append(job_post)
+
 
 
 # In[5]:
