@@ -3,7 +3,7 @@ Pulls data from Indeed for job hunting
 
 """
 
-
+import os
 import requests
 import bs4
 from bs4 import BeautifulSoup
@@ -11,12 +11,9 @@ import pandas as pd
 import time
 import WazeRouteCalculator
 import datetime
-import os
+from tqdm import tqdm
 
 
-# ## Pulling Job Data
-
-# In[2]:
 
 
 project_path = os.path.dirname(os.path.abspath(__file__))
@@ -46,11 +43,7 @@ columns = ['city', 'job_title', 'company_name',
 sample_df = pd.DataFrame(columns=columns)
 
 
-# In[4]:
-
-
-# scraping code:
-for title in title_set:
+for title in tqdm(title_set):
     for city in city_set:
         for start in range(0, max_results_per_city, 10):
             page = requests.get('http://www.indeed.com/jobs?q=' + str(title) +
@@ -106,13 +99,8 @@ for title in title_set:
 
 
 
-# In[5]:
-
-
 del sample_df['city']
 
-
-# In[6]:
 
 
 sample_df['job_title'] = sample_df['job_title'].str.lower()
@@ -130,16 +118,9 @@ sample_df = sample_df.drop_duplicates(
 
 sample_df.to_csv(
     project_path + "2_data/1_raw/scraper_indeed_jobs_raw.csv", encoding='utf-8')
-sample_df
 
 
-# ## Dropping unwanted job titles
-#
 
-# In[8]:
-
-
-# Try this
 sample_df = sample_df[(sample_df["job_title"] != "account") &
                       (~sample_df["job_title"].str.contains('engineer')) &
                       (~sample_df["job_title"].str.contains('research')) &
@@ -154,9 +135,7 @@ sample_df = sample_df[(sample_df["job_title"] != "account") &
 sample_df
 
 
-# ## Dropping Unwanted Cities
 
-# In[9]:
 
 
 sample_df = sample_df[(~sample_df["location"].str.contains('woodland hills')) &
@@ -177,9 +156,7 @@ sample_df = sample_df[(~sample_df["location"].str.contains('woodland hills')) &
 sample_df
 
 
-# ## Dropping Companies
 
-# In[11]:
 
 
 sample_df = sample_df[(~sample_df["company_name"].str.contains('ucla Extension')) &
@@ -197,18 +174,13 @@ sample_df = sample_df[(~sample_df["company_name"].str.contains('ucla Extension')
 sample_df
 
 
-# In[12]:
 
 
 sample_df.to_csv(
     project_path + "2_data/2_clean/scraper_indeed_jobs_clean.csv", encoding='utf-8')
 
 
-# ### Saving Clean Data
 
-# ## Calculating Distance
-
-# In[13]:
 
 
 sample_df["clean_address"] = sample_df["company_name"] + \
@@ -242,13 +214,8 @@ sample_df = sample_df.join(df, lsuffix='_caller', rsuffix='_other')
 sample_df
 
 
-# ### Filtering Based on Distance
-
-# In[16]:
 
 
 sample_df.to_csv(
     project_path + "2_data/2_clean/scraper_indeed_jobs_clean_enhanced.csv", encoding='utf-8')
 
-
-# In[ ]:
