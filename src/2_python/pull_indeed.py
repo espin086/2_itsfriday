@@ -19,15 +19,11 @@ from tqdm import tqdm
 project_path = os.path.dirname(os.path.abspath(__file__))
 
 now = datetime.datetime.now()
-now.year
-now.month
-now.day
 date = str(now.year) + str(now.month) + str(now.day) + \
     "_" + str(now.hour) + str(now.minute)
-date
 
 
-# In[3]:
+
 
 
 max_results_per_city = 100
@@ -95,7 +91,7 @@ for title in tqdm(title_set):
                     except:
                         job_post.append('Nothing_found')
                 # appending list of job post info to dataframe at index num
-                sample_df = sample_df.append(job_post)
+                sample_df = sample_df.append(job_post, ignore_index=True)
 
 
 
@@ -111,15 +107,12 @@ sample_df = sample_df.drop_duplicates(
     subset=['job_title', 'company_name'], keep=False)
 
 
-# ### Saving Raw Data
-
-# In[7]:
 
 
 sample_df.to_csv(
-    project_path + "2_data/1_raw/scraper_indeed_jobs_raw.csv", encoding='utf-8')
+    project_path + "/2_data/1_raw/scraper_indeed_jobs_raw.csv", encoding='utf-8')
 
-
+# TODO: put all of the code above that does the scraping into a function
 
 sample_df = sample_df[(sample_df["job_title"] != "account") &
                       (~sample_df["job_title"].str.contains('engineer')) &
@@ -177,7 +170,7 @@ sample_df
 
 
 sample_df.to_csv(
-    project_path + "2_data/2_clean/scraper_indeed_jobs_clean.csv", encoding='utf-8')
+    project_path + "/2_data/2_clean/scraper_indeed_jobs_clean.csv", encoding='utf-8')
 
 
 
@@ -187,9 +180,8 @@ sample_df["clean_address"] = sample_df["company_name"] + \
     ' ' + sample_df["location"]
 
 
-# In[14]:
 
-
+#TODO: put the code below into a Waze commute calculator into it's own function
 commutes = []
 
 for address in sample_df["clean_address"]:
@@ -217,5 +209,7 @@ sample_df
 
 
 sample_df.to_csv(
-    project_path + "2_data/2_clean/scraper_indeed_jobs_clean_enhanced.csv", encoding='utf-8')
+    project_path + "/2_data/2_clean/scraper_indeed_jobs_clean_enhanced.csv", encoding='utf-8')
 
+
+# TODO: create a main function to encapsulate all of this code
