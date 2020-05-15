@@ -1,65 +1,47 @@
+"""
+A menu to interact with the job search program
+"""
+
+
 import os
-import sys
-
-project_dir = '/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/'
 
 
-#--------------------------------------------------------------------
-#Defining Main Menu
-def mainMenu():
-	print("1. Scrape Indeed")
-	print("2. Do something bad")
-	print("3. Quit")
-	
-	while True:
-		try:
-			selection = int(input("Enter choice: "))
-			if selection ==   1:
-				
-				os.system("python " + project_dir + "1_src/2_python/2_pull_indeed.py" )
-				
-				mainMenu()
-				
-				break
-			elif selection == 2:
-				
-				#calling function
-				#bad()
-				
-				#calling python program
-				#os.system("python mypy.py")
-				
-				#caling a shell script
-				#os.system("sh test.sh")
-				
-				break
-			elif selection == 3:
-				
-				break 
-			else:
-				
-				print("Invalid choice. Enter 1-3")
-				mainMenu()
-		
-		except ValueError:
-			print("Invalid choice. Enter 1-3")
-	exit
+PROJECT_DIR = '/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/'
 
-#--------------------------------------------------------------------
-#Defining functions that go into menu:
 
-def good():
-	print("Good")
-	anykey = input("Any Key to Main Menu: ")
-	mainMenu()
+# --------------------------------------------------------------------
+# Defining Main Menu
+def main_menu():
+    """
+    The main menu function that takes user input
+    """
+    print("1. Scrape Indeed")
+    print("2. Quit")
 
-def bad():
-	print("Bad")
-	anykey = input("Any Key to Main Menu: ")
-	mainMenu()
+    while True:
+        try:
+            selection = int(input("Enter choice: "))
+            if selection == 1:
 
-#--------------------------------------------------------------------
-#Running Main Program
+                os.system("python " + PROJECT_DIR +
+                          "src/2_python/2_pull_indeed.py")
 
-mainMenu()
+                main_menu()
 
+                break
+            elif selection == 2:
+                break
+            else:
+
+                print("Invalid choice. Enter 1-2")
+                main_menu()
+
+        except ValueError:
+            print("Invalid choice. Enter 1-2")
+
+
+# --------------------------------------------------------------------
+# Running Main Program
+
+if __name__ == "__main__":
+    main_menu()
