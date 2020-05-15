@@ -25,7 +25,7 @@ def main_menu():
             if selection == 1:
 
                 os.system("python " + PROJECT_DIR +
-                          "/src/2_python/2_pull_indeed.py")
+                          "/src/2_python/pull_indeed.py")
 
                 main_menu()
 
