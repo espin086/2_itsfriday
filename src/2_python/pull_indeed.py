@@ -2,6 +2,7 @@
 Pulls data from Indeed for job hunting
 
 """
+#TODO: scraper is not returning any results!!! So entire program is not working.
 
 import os
 import requests
@@ -199,11 +200,10 @@ for address in sample_df["clean_address"]:
 # In[15]:
 
 
-df = pd.DataFrame(commutes)
+df = pd.DataFrame(pd.np.empty((0, 2)))
 df.columns = ['commute', 'distance_km']
 df.index = range(1, len(df)+1)
 sample_df = sample_df.join(df, lsuffix='_caller', rsuffix='_other')
-sample_df
 
 
 
