@@ -4,9 +4,10 @@ A menu to interact with the job search program
 
 
 import os
+# getting current directory
 
 
-PROJECT_DIR = '/Users/jjespinoza/GoogleDrive/2_projects/2_itsfriday/'
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 # --------------------------------------------------------------------
@@ -24,7 +25,7 @@ def main_menu():
             if selection == 1:
 
                 os.system("python " + PROJECT_DIR +
-                          "src/2_python/2_pull_indeed.py")
+                          "/src/2_python/2_pull_indeed.py")
 
                 main_menu()
 
