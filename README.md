@@ -2,7 +2,7 @@
 This project automates your job hunt.
 ### Author: JJ Espinoza | Twitter: https://twitter.com/JJcodes314
 
-![alt text](https://github.com/espin086/JobHunter/blob/master/folder_structure.png)
+
 
 #### -- Project Status: [Active]
 
@@ -19,6 +19,7 @@ The purpose of this project is to automate various steps in looking for a job. I
 ## Project Description
 * Job listing data scraped off of Indeed
 * Commute times calculated using Waze API
+![alt text](https://github.com/espin086/JobHunter/blob/master/folder_structure.png)
 
 ## TODOs
 
