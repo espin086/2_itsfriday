@@ -3,3 +3,5 @@ requests==2.21.0
 pandas==0.24.1
 beautifulsoup4==4.9.0
 WazeRouteCalculator==0.12
+numpy==1.12.0
+
