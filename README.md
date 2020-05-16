@@ -1,7 +1,7 @@
 # Project Name
 This project is a part of the [Data Science Working Group](http://datascience.codeforsanfrancisco.org) at [Code for San Francisco](http://www.codeforsanfrancisco.org).  Other DSWG projects can be found at the [main GitHub repo](https://github.com/sfbrigade/data-science-wg).
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+![alt text](https://github.com/espin086/JobHunter/blob/master/folder_structure.png)
 
 #### -- Project Status: [Active, On-Hold, Completed]
 
