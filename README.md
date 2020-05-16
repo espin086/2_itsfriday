@@ -1,6 +1,6 @@
 # JobHunter
 This project automates your job hunt.
-### Author: JJ Espinoza follow me on Twitter: https://twitter.com/JJcodes314
+### Author: JJ Espinoza | Twitter: https://twitter.com/JJcodes314
 
 ![alt text](https://github.com/espin086/JobHunter/blob/master/folder_structure.png)
 
