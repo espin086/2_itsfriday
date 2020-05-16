@@ -23,9 +23,7 @@ The purpose of this project is to automate various steps in looking for a job. I
 
 ## TODOs
 
-- TODO: Find a way to download job descriptions and use NLP to match to resumes
-- TODO: Create testing database for unit testing
-- TODO: Develop a front end website for application 
+- Go to Issues on Github
 
 ## Getting Started
 
