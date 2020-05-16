@@ -7,7 +7,7 @@ This project automates your job hunt.
 #### -- Project Status: [Active]
 
 ## Project Intro/Objective
-The purpose of this project is to automate various steps in looking for a job. It take into consideration the job title, city, and commute times a person would like to filter by. It has verious modules that could be useful for other programs. 
+The purpose of this project is to automate various steps in looking for a job. It take into consideration the job title, city, and commute times a person would like to filter by. It has various modules that could be useful for other programs. 
 
 
 ### Technologies
