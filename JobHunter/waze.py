@@ -22,8 +22,8 @@ def calc_route(TO_ADDRESS, FROM_ADDRESS, region='US', real_time=False):
 
 
 if __name__ == "__main__":
-    TO_ADDRESS = str(raw_input("To Address:  "))
-    FROM_ADDRESS = str(raw_input("From Address: "))
+    TO_ADDRESS = str(input("To Address:  "))
+    FROM_ADDRESS = str(input("From Address: "))
     COMMUTE = calc_route(TO_ADDRESS=TO_ADDRESS,
                          FROM_ADDRESS=FROM_ADDRESS)
     print("""
