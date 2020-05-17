@@ -69,8 +69,8 @@ def scrape_indeed(city, title, max_results_per_city=100):
 
 
 if __name__ == "__main__":
-    CITY = input("What city?:  ")
+    CITY = str(raw_input("What city?:  "))
     CITY = CITY.replace(" ", "+")
-    JOB_TITLE = input("what job title?:  ")
+    JOB_TITLE = str(raw_input("what job title?:  "))
     JOB_TITLE = JOB_TITLE.replace(" ", "+")
     print(scrape_indeed(city=CITY, title=JOB_TITLE))
