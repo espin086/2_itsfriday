@@ -33,8 +33,5 @@ The purpose of this project is to automate various steps in looking for a job. I
 ![alt text](https://github.com/espin086/JobHunter/blob/master/test_output.png)
 
 
-## Featured Deliverables
-* [Indeed Web Scrapter](link)
-* [Waze API Commute/Distance Estimator](https://github.com/espin086/JobHunter/tree/master/JobHunter/waze)
 
 
