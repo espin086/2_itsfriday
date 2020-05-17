@@ -11,7 +11,7 @@ The purpose of this project is to automate various steps in looking for a job. I
 
 
 ### Technologies
-* Python
+* Python 3.6
 * Waze API
 * HTML
 * Web Scraping
