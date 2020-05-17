@@ -27,10 +27,11 @@ The purpose of this project is to automate various steps in looking for a job. I
 
 ## Getting Started
 
-1. Clone this repo (for help see this [tutorial](https://help.github.com/articles/cloning-a-repository/)).
-2. Install the required python packages by going to the project and using pip install -r requirements.txt
-3. Run the automated tests by going into JobHunter/Jobhunter and typing this in terminal: python3 -m pytest
+1. **Clone** this repo (for help see this [tutorial](https://help.github.com/articles/cloning-a-repository/)).
+2. **Install python packages** by going to the project and using pip install -r requirements.txt
+3. **Run the automated tests** by going into JobHunter/Jobhunter and typing this in terminal: python3 -m pytest
 ![alt text](https://github.com/espin086/JobHunter/blob/master/images/test_output.png)
+4. **Visit issues tab in project and improve software**
 
 
 
