@@ -18,5 +18,5 @@ def job_hunter():
 
 if __name__ == "__main__":
     for address in job_hunter()['clean_address']:
-        print(waze.calc_route(TO_ADDRESS=address,                    
-        FROM_ADDRESS='Long Beach, CA'))
+        print(waze.calc_route(TO_ADDRESS=TO_ADDRESS,
+        FROM_ADDRESS=address))
