@@ -1,5 +1,12 @@
 README.md
 setup.py
+JobHunter/__init__.py
+JobHunter/job_hunter.py
+JobHunter/job_hunter_test.py
+JobHunter/pull_indeed.py
+JobHunter/pull_indeed_test.py
+JobHunter/waze.py
+JobHunter/waze_test.py
 jobhunter/__init__.py
 jobhunter/job_hunter.py
 jobhunter/job_hunter_test.py
