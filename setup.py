@@ -19,6 +19,17 @@ setuptools.setup(
     descriptino="Automates job hunting process",
     url="https://github.com/espin086/JobHunter",
     packages=setuptools.find_packages(),
+    install_requires=[
+          'WazeRouteCalculator',
+          'requests',
+          'beautifulsoup4',
+          'pandas',
+          'tqdm',
+          'WazeRouteCalculator',
+          'lxml',
+          'numpy',
+          'pytest'
+      ],
     classifiers=(
         "Programming Language:: Python :: 3",
         "License :: OSI Approved :: MIT License",
