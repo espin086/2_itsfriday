@@ -34,7 +34,7 @@ The purpose of this project is to automate various steps in looking for a job. I
 4. **Run the Code** by using python job_hunter.py inside the repo.
 ![alt text](https://github.com/espin086/JobHunter/blob/master/images/running_code.png)
 
-5. **View Results in results folder**
+5. **View Results in results folder** JobHunter/jobhunter/results
 ![alt text](https://github.com/espin086/JobHunter/blob/master/images/results.png)
 
 6. **Visit issues tab in project and improve software by contributing**
